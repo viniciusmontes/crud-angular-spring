@@ -15,7 +15,7 @@ import { CoursesListComponent } from './components/courses-list/courses-list.com
   declarations: [
     CoursesComponent,
     CourseFormComponent,
-    CoursesListComponent
+    CoursesListComponent,
   ],
   imports: [
     CommonModule,
