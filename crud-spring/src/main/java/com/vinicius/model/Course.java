@@ -1,5 +1,6 @@
 package com.vinicius.model;
 
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.validator.constraints.Length;
 
@@ -17,7 +18,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@SQLRestriction("status <> 'Inativo'")
+@SQLDelete(sql = "UPDATE Course SET status = 'Inactive' WHERE id=?")
+@SQLRestriction("status <> 'Inactive'")
 public class Course {
 
     @Id
