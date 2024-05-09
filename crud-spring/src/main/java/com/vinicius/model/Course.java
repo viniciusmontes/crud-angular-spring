@@ -1,9 +1,6 @@
 package com.vinicius.model;
 
-
-
-
-
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,6 +17,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@SQLRestriction("status <> 'Inativo'")
 public class Course {
 
     @Id
@@ -38,5 +36,11 @@ public class Course {
     @Pattern(regexp = "Back-end|Front-end")
     @Column(length = 10, nullable = false)
     private String category;
+
+    @NotBlank
+    @Length(max = 100)
+    @Pattern(regexp = "Ativo|Inativo")
+    @Column(length = 10, nullable = false)
+    private String status = "Ativo";
 
 }
