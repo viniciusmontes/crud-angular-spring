@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.vinicius.dto.CourseDTO;
 import com.vinicius.dto.mapper.CourseMapper;
+import com.vinicius.enums.Category;
 import com.vinicius.exception.RecordNotFoundException;
 import com.vinicius.repository.CourseRepository;
 
@@ -49,7 +50,7 @@ public class CourseService {
         return courseRepository.findById(id)
                 .map(recordFound -> {
                     recordFound.setName(course.name());
-                    recordFound.setCategory(course.category());
+                    recordFound.setCategory(Category.FRONT_END);
                     return courseMapper.toDTO(courseRepository.save(recordFound));
                 }).orElseThrow(() -> new RecordNotFoundException(id));
     }
