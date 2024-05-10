@@ -9,18 +9,47 @@
 
       <mat-form-field class="full-width">
         <mat-label>Categoria</mat-label>
-        <mat-select formControlName="category" >
+        <mat-select formControlName="category">
           <mat-option value="null"></mat-option>
           <mat-option value="Front-end">Front-end</mat-option>
           <mat-option value="Back-end">Back-end</mat-option>
         </mat-select>
       </mat-form-field>
+
+      <mat-toolbar>
+        <span>Aulas</span>
+        <button mat-icon-button color="accent">
+          <mat-icon aria-label="Adicionar uma nova aula">add</mat-icon>
+        </button>
+      </mat-toolbar>
+
+      <table style="width: 100%" formArrayName="lessons"
+      *ngFor="let lesson of getLessonsFormArray(); let i = index" >
+        <tr [formGroupName]="i">
+          <td style="width: 65%">
+            <mat-form-field class="full-width">
+              <mat-label>Nome da aula</mat-label>
+              <input matInput formControlName="name" />
+            </mat-form-field>
+          </td>
+          <td style="width: 30%">
+            <mat-form-field class="full-width">
+              <mat-label>URL</mat-label>
+              <span matPrefix>https://youtube.be/</span>
+              <input matInput formControlName="youtubeUrl" />
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
     </form>
   </mat-card-content>
 
   <mat-card-actions class="actions-center">
-    <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
-    <button mat-raised-button (click)="onCancel()" class="bnt-space">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()">
+      Salvar
+    </button>
+    <button mat-raised-button (click)="onCancel()" class="bnt-space">
+      Cancelar
+    </button>
   </mat-card-actions>
-
 </mat-card>
