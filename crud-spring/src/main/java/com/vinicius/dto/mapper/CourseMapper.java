@@ -1,8 +1,12 @@
 package com.vinicius.dto.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
 import com.vinicius.dto.CourseDTO;
+import com.vinicius.dto.LessonDTO;
 import com.vinicius.enums.Category;
 import com.vinicius.model.Course;
 
@@ -13,7 +17,11 @@ public class CourseMapper {
         if (course == null) {
             return null;
         }
-        return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue(), course.getLessons());
+        List<LessonDTO> lessons = course.getLessons()
+                .stream()
+                .map(lesson -> new LessonDTO(lesson.getId(), lesson.getName(), lesson.getYoutubeUrl()))
+                .collect(Collectors.toList());
+        return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue(), lessons);
     }
 
     public Course toEntity(CourseDTO courseDTO) {
@@ -38,7 +46,7 @@ public class CourseMapper {
             case "Back-end" -> Category.BACK_END;
             default -> throw new IllegalArgumentException("Invalid value: " + value);
         };
-        
+
     }
 
 }
