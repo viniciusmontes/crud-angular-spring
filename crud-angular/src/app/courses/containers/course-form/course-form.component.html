@@ -28,11 +28,16 @@
           <mat-icon aria-label="Adicionar uma nova aula">add</mat-icon>
         </button>
       </mat-toolbar>
-      <mat-error *ngIf="isFormArratRequired()" class="form-array-error">
-        Adicione pelo menos uma aula.
+
+      <mat-error *ngIf="isFormArratRequired()" class="form-array-error"
+        >Adicione pelo menos uma aula.
       </mat-error>
 
-      <table style="width: 100%" formArrayName="lessons" *ngFor="let lesson of getLessonsFormArray(); let i = index">
+      <table
+        style="width: 100%"
+        formArrayName="lessons"
+        *ngFor="let lesson of getLessonsFormArray(); let i = index"
+      >
         <tr [formGroupName]="i">
           <td style="width: 65%">
             <mat-form-field class="full-width">
@@ -48,7 +53,9 @@
               <mat-label>URL</mat-label>
               <span matPrefix>https://youtube.be/</span>
               <input matInput formControlName="youtubeUrl" />
-              <mat-error *ngIf="getLessonsFormArray()[i].get('youtubeUrl')?.invalid">
+              <mat-error
+                *ngIf="getLessonsFormArray()[i].get('youtubeUrl')?.invalid"
+              >
                 Campo inválido
               </mat-error>
             </mat-form-field>
@@ -64,7 +71,11 @@
   </mat-card-content>
 
   <mat-card-actions class="actions-center">
-    <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
-    <button mat-raised-button (click)="onCancel()" class="bnt-space">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()">
+      Salvar
+    </button>
+    <button mat-raised-button (click)="onCancel()" class="bnt-space">
+      Cancelar
+    </button>
   </mat-card-actions>
 </mat-card>
