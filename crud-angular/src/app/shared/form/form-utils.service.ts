@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import {
-  FormArray,
-  FormGroup,
   UntypedFormArray,
   UntypedFormControl,
   UntypedFormGroup,
@@ -37,19 +35,22 @@ export class FormUtilsService {
     if (field?.hasError('required')) {
       return 'Campo obrigatório';
     }
-    if (field?.hasError('minlenght')) {
-      const requiredLengh: number = field.errors
-        ? field.errors['minlegth']['requiredLength']
+
+    if (field?.hasError('minlength')) {
+      const requiredLength: number = field.errors
+        ? field.errors['minlength']['requiredLength']
         : 5;
-      return `Tamanho mínimo precisa de ser ${requiredLengh} caracteres.`;
+      return `Tamanho mínimo precisa ser de ${requiredLength} caracteres.`;
     }
+
     if (field?.hasError('maxlength')) {
-      const requiredLengh: number = field.errors
+      const requiredLength: number = field.errors
         ? field.errors['maxlength']['requiredLength']
         : 200;
-      return `Tamanho maxímo excedido de ${requiredLengh} caracteres.`;
+      return `Tamanho máximo excedido de ${requiredLength} caracteres.`;
     }
-    return 'Campo inválido';
+
+    return 'Campo Inválido';
   }
 
   getFormArrayFieldErrorMessage(
@@ -65,7 +66,7 @@ export class FormUtilsService {
     return this.getErrorMessageFromField(field);
   }
 
-  isFormArratRequired(formGroup: UntypedFormGroup, formArrayName: string) {
+  isFormArrayRequired(formGroup: UntypedFormGroup, formArrayName: string) {
     const formArray = formGroup.get(formArrayName) as UntypedFormArray;
     return (
       !formArray.valid && formArray.hasError('required') && formArray.touched
