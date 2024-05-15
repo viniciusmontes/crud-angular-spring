@@ -44,7 +44,7 @@ public class CourseController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public CourseDTO create(@RequestBody @Valid  @NotNull CourseDTO course) {
+    public CourseDTO create(@RequestBody @Valid @NotNull CourseDTO course) {
         return courseService.create(course);
     }
 
