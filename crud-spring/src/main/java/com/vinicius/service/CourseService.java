@@ -33,21 +33,20 @@ public class CourseService {
         this.courseMapper = courseMapper;
     }
 
+    public CoursePageDTO list(@PositiveOrZero int page, @Positive @Max(100) int pageSize) {
+        Page<Course> pageCourse = courseRepository.findAll(PageRequest.of(page, pageSize));
+        List<CourseDTO> courses = pageCourse.get().map(courseMapper::toDTO).collect(Collectors.toList());
+        return new CoursePageDTO(courses, pageCourse.getTotalElements(), pageCourse.getTotalPages());
+    }
+
     /*
      * public List<CourseDTO> list() {
      * return courseRepository.findAll()
      * .stream()
      * .map(courseMapper::toDTO)
      * .collect(Collectors.toList());
-     * 
      * }
      */
-
-    public CoursePageDTO list(@PositiveOrZero int page, @Positive @Max(100) int pageSize) {
-        Page<Course> pageCourse = courseRepository.findAll(PageRequest.of(page, pageSize));
-        List<CourseDTO> courses = pageCourse.get().map(courseMapper::toDTO).collect(Collectors.toList());
-        return new CoursePageDTO(courses, pageCourse.getTotalElements(), pageCourse.getTotalPages());
-    }
 
     public CourseDTO findById(@NotNull @Positive Long id) {
         return courseRepository.findById(id).map(courseMapper::toDTO)
@@ -64,7 +63,6 @@ public class CourseService {
                     Course course = courseMapper.toEntity(courseDTO);
                     recordFound.setName(courseDTO.name());
                     recordFound.setCategory(courseMapper.convertCategoryValue(courseDTO.category()));
-                    // recordFound.setLessons(course.getLessons());
                     recordFound.getLessons().clear();
                     course.getLessons().forEach(recordFound.getLessons()::add);
                     return courseMapper.toDTO(courseRepository.save(recordFound));
@@ -75,5 +73,4 @@ public class CourseService {
         courseRepository.delete(courseRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException(id)));
     }
-
 }
